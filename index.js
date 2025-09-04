@@ -174,8 +174,8 @@ return "ok";
 
 
 
+//=============================================ISSUE 4 (Logic main): Poor Code Structure and Magic Values ================================================================================
 
-// logic viết thẳng, không tách hàm
 function main(){
   var q=DoIt(5,6); // ❌ Lỗi: magic number, tên q quá ngắn
   prc([1,2,3]) // ❌ Lỗi: magic data, tên hàm mơ hồ
@@ -199,3 +199,41 @@ function main(){
 }
 
 main();
+
+
+//============================================================CLEAN CODE================================================================================
+
+async function mainClean() {
+    // Dùng biến tên rõ nghĩa
+    const resultWithOffset = addWithOffset(5, 6); // dùng hằng số offset
+    printArrayElements(SAMPLE_NUMBERS); // thay prc()
+
+    console.log(`Done. Result: ${resultWithOffset}, Initial value: ${INITIAL_VALUE}`);
+
+    // Tránh magic number, dùng hằng số
+    if (GLOBAL_MAGIC_VALUE > GLOBAL_THRESHOLD) {
+        console.log("Value is greater than threshold");
+    } else if (GLOBAL_MAGIC_VALUE === GLOBAL_MAGIC_VALUE) {
+        console.log("Special magic value detected!");
+    } else {
+        console.log("No matching condition");
+    }
+
+    // Gọi hàm với tên rõ nghĩa
+    const mockNumericData = fetchDataFromUrl(SAMPLE_URL);
+    const mockTextData = fetchTextFromUrl(SAMPLE_URL);
+    const isDownloadable = canDownloadFromUrl(SAMPLE_URL);
+
+    console.log(`Fetched: ${mockNumericData}, ${mockTextData}, Downloadable: ${isDownloadable}`);
+
+    // Chờ delay rõ nghĩa
+    await waitMilliseconds(WAIT_DURATION_MS);
+
+    // Load dữ liệu với Promise
+    const response = await loadData();
+    console.log(`Data loaded: ${response}`);
+}
+
+mainClean();
+
+//============================================================END CLEAN CODE================================================================================
