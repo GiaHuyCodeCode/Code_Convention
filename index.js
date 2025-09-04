@@ -1,6 +1,8 @@
 
 
-// LỖI 1
+
+//=============================================ISSUE 1: AVOID MAGIC NUMBER ================================================================================
+
 var a = 123 // ❌ Lỗi: Tên biến a quá chung chung, 123 là magic number, không rõ đơn vị
 var tmp = "http://abc.com" // ❌ Lỗi: tmp không mô tả rõ ý nghĩa
 var arr=[1,2,3,4,5] // ❌ Lỗi: format kém, magic data không có giải thích
@@ -24,6 +26,20 @@ const LOAD_DELAY_LEVEL3_MS = 300;
 //============================================================END CLEAN CODE================================================================================
 
 
+
+
+
+
+
+
+
+
+
+
+
+//=============================================ISSUE 2: Poor Code Readability due to Inconsistent Naming, Magic Values, and Ambiguous Identifiers ================================================================================
+
+
 // hàm tên viết hoa lung tung, làm nhiều việc
 function DoIt(x,y){return x+y+42} // ❌ Lỗi: Tên hàm mơ hồ, viết hoa không chuẩn, chứa magic number 42
 
@@ -39,6 +55,56 @@ for(var i=0;i<stuff.length;i++){console.log(stuff[i])}} // ❌ Lỗi: format ké
 function Get(u){return 999} // ❌ Lỗi: Tên Get quá chung chung, 999 là magic number
 function fetch(u){return "data"} // ❌ Lỗi: data là magic string
 function DOWNLOAD(u){return true} // ❌ Lỗi: Tên hàm in hoa không consistent
+
+
+//============================================================CLEAN CODE================================================================================
+
+// Hàm cộng thêm offset rõ ràng
+function addWithOffset(firstValue, secondValue){
+    return firstValue + secondValue + MAGIC_OFFSET;
+}
+
+// Hàm tích điểm với hệ số rõ ràng
+function calculateScore(dateValue,weightValue){
+    if(dateValue > THRESHOLD_VALUE){
+       return dateValue * DOUBLE_FACTOR + weightValue * WEIGHT_FACTOR;
+    }
+    return dateValue + weightValue;
+}
+
+// Hàm in phần tử của mảng
+function printArrayElements(elementsArray){
+    for(let index=0; index < elementsArray.length;index++){
+        console.log(elementsArray[index]);
+    }
+}
+
+// Hàm fetch dữ liệu từ URL (mock)
+function fetchDataFromUrl(requestUrl){
+    return 999; // mock data
+}
+
+// Hàm lấy dữ liệu text từ URL (mock)
+function fetchTextFromUrl(requestUrl){
+    return "data";
+}
+
+// Hàm kiểm tra URL có thể download không
+function canDownloadFromUrl(requestUrl){
+    return true;
+}
+
+//============================================================END CLEAN CODE================================================================================
+
+
+
+
+
+
+
+
+
+//=============================================ISSUE 3: Poor Code Readability and Maintainability================================================================================
 
 // biến global lung tung
 val=0; // ❌ Lỗi: Khai báo biến global không an toàn
@@ -56,15 +122,58 @@ var sum=0;for(let i=0;i<x.length;i++){sum+=x[i]}return sum;} // ❌ Lỗi: tên 
 // nested callback hell
 function load(cb){setTimeout(()=>{setTimeout(()=>{setTimeout(()=>{cb("ok")},100)},200)},300)} // ❌ Lỗi: callback hell, magic number 100/200/300
 
-// biến bị viết tắt khó hiểu
-let u = "usr"; // ❌ Lỗi: u quá ngắn, usr không rõ nghĩa
-let pw = "123456"; // ❌ Lỗi: Hardcode password trong code
 
-// không rõ đơn vị
-function wait(time){return new Promise(r=>setTimeout(r,time))} // ❌ Lỗi: time không rõ là ms/seconds
+//============================================================CLEAN CODE================================================================================
 
-// tên mơ hồ, không mô tả ý nghĩa
-function handle(){console.log("handling...")} // ❌ Lỗi: handle quá chung chung, log không mô tả rõ hành động
+// Biến toàn cục đặt tên rõ ràng
+let globalCounter = 0;
+let globalCacheSize = 12345;
+
+
+// Hàm cộng 2 số rõ ràng
+function sumTwoNumbers(firstNumber, secondNumber) {
+const result = firstNumber + secondNumber;
+return result;
+}
+
+
+// Hàm tính tổng mảng giá trị
+function sumArrayValues(valuesArray) {
+let total = 0;
+for (let index = 0; index < valuesArray.length; index++) {
+total += valuesArray[index];
+}
+return total;
+}
+
+
+// Hàm tính trung bình mảng
+function averageArrayValues(valuesArray) {
+if (valuesArray.length === 0) return 0;
+const total = sumArrayValues(valuesArray);
+return total / valuesArray.length;
+}
+
+
+// Hàm chờ có hậu tố ms
+function waitForDuration_ms(durationMs) {
+return new Promise(resolve => setTimeout(resolve, durationMs));
+}
+
+
+// Hàm load dữ liệu tránh callback hell
+async function loadDataAsync() {
+await waitForDuration_ms(
+LOAD_DELAY_LEVEL1_MS + LOAD_DELAY_LEVEL2_MS + LOAD_DELAY_LEVEL3_MS
+);
+return "ok";
+}
+
+//============================================================END CLEAN CODE================================================================================
+
+
+
+
 
 // logic viết thẳng, không tách hàm
 function main(){
