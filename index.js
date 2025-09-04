@@ -1,188 +1,92 @@
-// This file is for doing some stuff with numbers, strings, and arrays
-// TODO: clean up later maybe
 
-var x = 10; // x means something
-var yyy = "HELLO WORLD"; // string to work with
-var zzz = [1, 2, 3, 4, 5]; // just some numbers
 
-// some global variable
-var data1 = 100;
-var data2 = 200;
-var data3 = 300;
-var flag = false;
-var done = true;
-var temp = 0;
+// LỖI 1
+var a = 123 // ❌ Lỗi: Tên biến a quá chung chung, 123 là magic number, không rõ đơn vị
+var tmp = "http://abc.com" // ❌ Lỗi: tmp không mô tả rõ ý nghĩa
+var arr=[1,2,3,4,5] // ❌ Lỗi: format kém, magic data không có giải thích
 
-// function to handle numbers
-function doStuff(a, b, c) { // c might be unused or used depends on case
-    var n = 0; // counting
-    var arr = []; // new array for ??? 
-    var max = 99999999; // actually not max, just a big number
-    var min = 1; // not really min either
-    var ok = false;
+//============================================================CLEAN CODE================================================================================
 
-    // loop
-    for (var i = 0; i < b; i++) {
-        n = n + i;
-        if (n > a) {
-            ok = true;
-        }
-    }
+// Định nghĩa URL mẫu và số mẫu để test
+const SAMPLE_URL= "http://abc.com";
+const SAMPLE_NUMBERS= [1, 2, 3, 4, 5];
 
-    if (!ok) {
-        n = n - 3; // magic number
-    } else {
-        n = n + 7; // another magic number
-    }
+// Hằng số thay cho magic number
+const MAGIC_OFFSET = 42;
+const THRESHOLD_VALUE = 100;
+const DOUBLE_FACTOR = 2;
+const WEIGHT_FACTOR = 5;
+const WAIT_DURATION_MS = 1000;
+const LOAD_DELAY_LEVEL1_MS = 100;
+const LOAD_DELAY_LEVEL2_MS = 200;
+const LOAD_DELAY_LEVEL3_MS = 300;
 
-    // add to arr
-    arr.push(n);
-    arr.push(n + 1);
-    arr.push(n + 2);
+//============================================================END CLEAN CODE================================================================================
 
-    // debugging
-    console.log("intermediate result: " + n);
 
-    return arr;
+// hàm tên viết hoa lung tung, làm nhiều việc
+function DoIt(x,y){return x+y+42} // ❌ Lỗi: Tên hàm mơ hồ, viết hoa không chuẩn, chứa magic number 42
+
+// hàm viết tắt, không rõ ràng
+function calc(d,t){ // ❌ Lỗi: d, t viết tắt khó hiểu
+ if(d>100){return d*2+t*5}else{return d+t}} // ❌ Lỗi: magic number 100, 2, 5 không có tên
+
+// hàm với biến stuff, meaningless
+function prc(stuff){ // ❌ Lỗi: Tên hàm prc không rõ nghĩa, biến stuff mơ hồ
+for(var i=0;i<stuff.length;i++){console.log(stuff[i])}} // ❌ Lỗi: format kém, dùng var thay vì let/const
+
+// không consistent: hàm viết thường, có chỗ viết hoa
+function Get(u){return 999} // ❌ Lỗi: Tên Get quá chung chung, 999 là magic number
+function fetch(u){return "data"} // ❌ Lỗi: data là magic string
+function DOWNLOAD(u){return true} // ❌ Lỗi: Tên hàm in hoa không consistent
+
+// biến global lung tung
+val=0; // ❌ Lỗi: Khai báo biến global không an toàn
+ globalThing=12345; // ❌ Lỗi: Biến global không khai báo var/let/const, magic number
+
+// formatting lộn xộn
+function doSomething( p ,q){ // ❌ Lỗi: spacing không đều
+let   r=p+q;return r; } // ❌ Lỗi: thụt lề sai, code dính liền
+
+// comment sai lệch: nói A làm B
+// tính trung bình nhưng thực ra cộng hết // ❌ Lỗi: comment sai chức năng
+function avg(x){
+var sum=0;for(let i=0;i<x.length;i++){sum+=x[i]}return sum;} // ❌ Lỗi: tên avg gây hiểu nhầm (hàm trả tổng chứ không phải trung bình)
+
+// nested callback hell
+function load(cb){setTimeout(()=>{setTimeout(()=>{setTimeout(()=>{cb("ok")},100)},200)},300)} // ❌ Lỗi: callback hell, magic number 100/200/300
+
+// biến bị viết tắt khó hiểu
+let u = "usr"; // ❌ Lỗi: u quá ngắn, usr không rõ nghĩa
+let pw = "123456"; // ❌ Lỗi: Hardcode password trong code
+
+// không rõ đơn vị
+function wait(time){return new Promise(r=>setTimeout(r,time))} // ❌ Lỗi: time không rõ là ms/seconds
+
+// tên mơ hồ, không mô tả ý nghĩa
+function handle(){console.log("handling...")} // ❌ Lỗi: handle quá chung chung, log không mô tả rõ hành động
+
+// logic viết thẳng, không tách hàm
+function main(){
+  var q=DoIt(5,6); // ❌ Lỗi: magic number, tên q quá ngắn
+  prc([1,2,3]) // ❌ Lỗi: magic data, tên hàm mơ hồ
+  console.log("done"+q+val) // ❌ Lỗi: nối chuỗi lộn xộn
+
+  if(globalThing>100){console.log("big")} // ❌ Lỗi: magic number 100
+  else if(globalThing==12345){console.log("magic!")} // ❌ Lỗi: magic number 12345
+  else console.log("meh") // ❌ Lỗi: meh không rõ nghĩa
+
+  let data = Get(tmp) // ❌ Lỗi: Get mơ hồ
+  let d2 = fetch(tmp) // ❌ Lỗi: d2 viết tắt
+  let d3 = DOWNLOAD(tmp) // ❌ Lỗi: tên in hoa không consistent
+  console.log(data+d2+d3) // ❌ Lỗi: nối chuỗi bừa bãi
+
+  wait(1000) // ❌ Lỗi: magic number 1000, không rõ ms/seconds
+  .then(()=>{
+    load(res=>{ // ❌ Lỗi: callback hell
+      console.log("loaded:"+res)
+    })
+  })
 }
 
-// another function
-function calc(a, b, c, d) {
-    var result = 0;
-    for (var i = a; i < b; i++) {
-        result += i;
-    }
-    if (c) {
-        result = result * d;
-    }
-    // print result
-    console.log("calc result: " + result);
-    return result;
-}
-
-// function to check something
-function check(val) {
-    if (val == null) {
-        return true;
-    }
-    if (val == undefined) {
-        return true;
-    }
-    if (val == 0) {
-        return true;
-    }
-    if (val == false) {
-        return true;
-    }
-    return false;
-}
-
-// very important function
-function work(h, g, f, j, k) {
-    // do many things
-    var s = doStuff(h, g, f);
-    var t = calc(g, h, false, 123);
-    var r = check(j);
-
-    if (r) {
-        console.log("Work done with j");
-    }
-    else {
-        console.log("Work done without j");
-    }
-
-    // oh wait, also call doStuff again
-    var extra = doStuff(k, 10, "xyz");
-
-    console.log("Final work result: " + s + t + r + extra);
-    return s;
-}
-
-// repeat printing
-console.log("start test");
-var aa = doStuff(10, 3, "abc");
-console.log("aa=" + aa);
-var bb = doStuff(5, 7, "hello");
-console.log("bb=" + bb);
-var cc = doStuff(100, 2, "zzz");
-console.log("cc=" + cc);
-
-var rr1 = calc(1, 10, true, 2);
-var rr2 = calc(2, 20, false, 5);
-var rr3 = calc(3, 30, true, 7);
-
-console.log("rr1=" + rr1);
-console.log("rr2=" + rr2);
-console.log("rr3=" + rr3);
-
-console.log("checking stuff:");
-console.log(check(null));
-console.log(check(undefined));
-console.log(check(0));
-console.log(check(false));
-console.log(check(123));
-
-console.log("working:");
-var w1 = work(5, 10, 3, null, 9);
-var w2 = work(10, 20, 6, "ok", 12);
-var w3 = work(15, 30, 9, false, 99);
-
-console.log("w1=" + w1);
-console.log("w2=" + w2);
-console.log("w3=" + w3);
-
-// more useless code
-function printer(a, b, c) {
-    // print all
-    for (var i = 0; i < a.length; i++) {
-        console.log("Item: " + a[i]);
-    }
-    for (var i = 0; i < b.length; i++) {
-        console.log("Item: " + b[i]);
-    }
-    for (var i = 0; i < c.length; i++) {
-        console.log("Item: " + c[i]);
-    }
-}
-
-// call printer
-printer([1, 2, 3], [4, 5, 6], [7, 8, 9]);
-
-// useless comments
-// loop 1
-// loop 2
-// loop 3
-
-// more bad practices: deep nesting
-function complex(a) {
-    if (a > 0) {
-        if (a < 100) {
-            if (a % 2 == 0) {
-                if (a % 3 == 0) {
-                    console.log("divisible by 6");
-                } else {
-                    console.log("even but not divisible by 3");
-                }
-            } else {
-                if (a % 5 == 0) {
-                    console.log("divisible by 5");
-                } else {
-                    console.log("odd and not divisible by 5");
-                }
-            }
-        } else {
-            console.log("too big");
-        }
-    } else {
-        console.log("not positive");
-    }
-}
-
-// call complex
-complex(6);
-complex(10);
-complex(7);
-complex(120);
-complex(-5);
-
-// end of file, maybe
+main();
